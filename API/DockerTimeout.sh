@@ -4,6 +4,10 @@ set -e
 to=$1
 shift
 
+if [[ $(uname) == 'Darwin' ]]; then
+    eval "$(docker-machine env default)"
+fi
+
 cont=$(docker run -d "$@")
 code=$(timeout "$to" docker wait "$cont" || true)
 docker kill $cont &> /dev/null
