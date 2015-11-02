@@ -1,11 +1,12 @@
- {
+{
   "name": "API",
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
-    "express": "2.5.11",
-    "express-brute":"*",
-    "exports": "*"
+    "body-parser": "^1.14.1",
+    "exports": "*",
+    "express": "^5.0.0-alpha.2",
+    "express-brute": "*"
   },
   "author": "Osman Ali",
   "license": "MIT"

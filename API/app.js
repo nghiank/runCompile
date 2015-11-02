@@ -9,7 +9,8 @@
 var express = require('express');
 var arr = require('./compilers');
 var sandBox = require('./DockerSandbox');
-var app = express.createServer();
+var bodyParser = require('body-parser');
+var app = express();
 var port=2015;
 
 
@@ -21,9 +22,9 @@ var bruteforce = new ExpressBrute(store,{
 });
 
 app.use(express.static(__dirname));
-app.use(express.bodyParser());
+app.use(bodyParser.json());
 
-app.all('*', function(req, res, next) 
+app.all('*', function(req, res, next)
 {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
@@ -38,13 +39,13 @@ function random(size) {
 }
 
 
-app.post('/compile',bruteforce.prevent,function(req, res) 
+app.post('/compile',bruteforce.prevent,function(req, res)
 {
 
     var language = req.body.language;
     var code = req.body.code;
     var stdin = req.body.stdin;
-   
+
     var folder= 'temp/' + random(10); //folder in which the temporary folder will be saved
     var path=__dirname+"/"; //current working path
     var vm_name='virtual_machine'; //name of virtual machine that we want to execute
@@ -61,14 +62,17 @@ app.post('/compile',bruteforce.prevent,function(req, res)
         //console.log("Data: received: "+ data)
     	res.send({output:data, langid: language,code:code, errors:err, time:exec_time});
     });
-   
+
 });
 
 
-app.get('/', function(req, res) 
+app.get('/', function(req, res)
 {
     res.sendfile("./index.html");
 });
 
 console.log("Listening at "+port)
-app.listen(port);
+var server = app.listen(port, function(){
+    var host = server.address().address;
+    var port = server.address().port;
+});
