@@ -4,7 +4,7 @@
 # Docker SETUP
 ###########################
 apt-get update
-apt-get install docker.io
+apt-get install -y docker.io
 ln -sf /usr/bin/docker.io /usr/local/bin/docker
 sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker.io
 
@@ -14,8 +14,8 @@ echo "Docker Setup complete"
 # NodeJS setup
 ###########################
 apt-get update
-apt-get install nodejs
-apt-get install npm
+apt-get install -y nodejs
+apt-get install -y npm
 echo "NodeJS setup Complete"
 
 ###########################
@@ -24,7 +24,7 @@ echo "NodeJS setup Complete"
 chmod 777 ../API/DockerTimeout.sh
 chmod 777 ../API/Payload/script.sh
 chmod 777 ../API/Payload/javaRunner.sh
-chmod 777 UpdateDocker.sh
+chmod 777 buildDockerImage.sh
 
 service docker.io restart
-./UpdateDocker.sh 
+./buildDockerImage.sh 
